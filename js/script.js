@@ -1,18 +1,9 @@
-/******************************************
-Treehouse Techdegree:
-FSJS project 2 - List Filter and Pagination
-******************************************/
-   
-// Study guide for this project - https://drive.google.com/file/d/1OD1d
-//iUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
-
-
 //global variable
 const studentList = document.getElementsByClassName('student-item cf');
 
 // the showPage Function hides students to only show 10 students per page
 const showPage = (list,page) => {
-   for (let i = 0; i < studentList.length; i ++){  
+   for (let i = 0; i < studentList.length; i ++) {  
       if (list <= i && i <= page){
          studentList[i].style.display = '';
       } else {
@@ -25,47 +16,60 @@ const showPage = (list,page) => {
 /* The appendPageLinks() function broken down into refactored functions 
 for pagination and manipulating the page */
 
-const makeElements = (name, create) => {
-   "const " + name + " = document.createElement('" + create + "');";
-}
-
-const appendChildren = (name, child) => name + ".appendChild(" + child + ");"
-
 const theSearchFunction = () => {
    const headerDiv = document.getElementsByClassName('page-header cf')[0];
-   makeElements(searchDiv,div);
-   makeElements(document,input);
-   makeElements(searchButton,button);
-   appendChildren(headerDiv,searchDiv);
-   appendChildren(searchDiv,searchInput);
-   appendChildren(searchDiv,searchButton);
+   const studentList = document.getElementsByClassName('student-item cf');
+   const students = document.getElementsByTagName('h3');
+   const searchDiv = document.createElement('div');
+   const searchInput = document.createElement('input');
+   const searchButton = document.createElement('button');
+   headerDiv.appendChild(searchDiv);
+   searchDiv.appendChild(searchInput);
+   searchDiv.appendChild(searchButton);
    searchDiv.className = 'student-search';
    searchInput.placeholder = 'Search for students...';
    searchButton.textContent = 'Search';
+   searchButton.addEventListener('click', (e) =>{
+      //console.log(searchInput.value);
+      for (i = 0; i < studentList.length; i++) { 
+         studentList[i].style.display = 'none';
+         console.log(students[i].innerText);
+         if (students[i].innerText = searchInput.innerText) {
+            studentList[i].style.display = '';
+         } 
+         //else {
+            // student.parentNode.parentNode.style.display = 'none';
+            // const searchNull = document.createElement('p');
+            // searchNull.textContent = "Sorry, there's no student by that name."
+            // searchDiv.appendChild(searchNull);
+         //}
+      }
+   })
 }
 
 const thePageNumbers = () => {
-   pageNumbers = Math.trunc(parseInt(studentList.length) / 10);
+      pageNumbers = Math.trunc(parseInt(studentList.length) / 10);
       if (parseInt(studentList.length) > pageNumbers * 10){
          pageNumbers++;
       }
-   const pageDiv = document.getElementsByClassName('page')[0];
-   makeElements(buttonsDiv,div);
-   makeElements(buttonsUl,ul);
-   makeElements(buttonsLi,li);
-   appendChildren(pageDiv,buttonsDiv);
-   appendChildren(buttonsDiv,buttonsUl);
-   appendChildren(buttonsUl,buttonsLi);
-   buttonsDiv.className = 'pagination';
-   buttonsUl.className = 'pagination';
-   buttonsLi.className = 'pagination';
-   for (let p = 1; p <= pageNumbers; p++){
-      const pageButton = document.createElement('a');
-      pageButton.setAttribute('href', "#");
-      pageButton.append(p);
-      pageButton.className = 'pagination';     
-      buttonsLi.appendChild(pageButton);
-   }     
+      const pageDiv = document.getElementsByClassName('page')[0];
+      const buttonsDiv = document.createElement('div');
+      const buttonsUl = document.createElement('ul');
+      const buttonsLi = document.createElement('li');
+      pageDiv.appendChild(buttonsDiv);
+      buttonsDiv.appendChild(buttonsUl);
+      buttonsUl.appendChild(buttonsLi);
+      buttonsDiv.className = 'pagination';
+      buttonsUl.className = 'pagination';
+      buttonsLi.className = 'pagination';
+      for (let p = 1; p <= pageNumbers; p++){
+         const pageButton = document.createElement('a');
+         pageButton.setAttribute('href', "#");
+         pageButton.append(p);
+         pageButton.className = 'pagination';     
+         buttonsLi.appendChild(pageButton);
+      }
+
 }
 
 const clickThePages = () => {
@@ -80,16 +84,18 @@ const clickThePages = () => {
          }
          button.className = 'active';
          index = e.target.textContent;
-         showPage(((parseInt(index)) * 10) - 10,((parseInt(index)) * 10) - 1);
+         list = ((parseInt(index)) * 10) - 10;
+         page = ((parseInt(index)) * 10) - 1;
+         showPage(list,page);
       }) 
    }
 }
 
 const appendPageLinks = () => {
    showPage(0,9);
-   theSearchFunction();
    thePageNumbers();
    clickThePages();
+   theSearchFunction();
 }
 
 appendPageLinks();
