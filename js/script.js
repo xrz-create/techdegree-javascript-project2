@@ -39,28 +39,27 @@ const theSearchFunction = () => {
 }
 
 const thePageNumbers = () => {
-      pageNumbers = Math.trunc(parseInt(studentList.length) / 10);
-      if (parseInt(studentList.length) > pageNumbers * 10){
-         pageNumbers++;
-      }
-      const pageDiv = document.getElementsByClassName('page')[0];
-      const buttonsDiv = document.createElement('div');
-      const buttonsUl = document.createElement('ul');
-      const buttonsLi = document.createElement('li');
-      pageDiv.appendChild(buttonsDiv);
-      buttonsDiv.appendChild(buttonsUl);
-      buttonsUl.appendChild(buttonsLi);
-      buttonsDiv.className = 'pagination';
-      buttonsUl.className = 'pagination';
-      buttonsLi.className = 'pagination';
-      for (let p = 1; p <= pageNumbers; p++){
-         const pageButton = document.createElement('a');
-         pageButton.setAttribute('href', "#");
-         pageButton.append(p);
-         pageButton.className = 'pagination';     
-         buttonsLi.appendChild(pageButton);
-      }
-      
+   pageNumbers = Math.trunc(parseInt(studentList.length) / 10);
+   if (parseInt(studentList.length) > pageNumbers * 10){
+      pageNumbers++;
+   }
+   const pageDiv = document.getElementsByClassName('page')[0];
+   const buttonsDiv = document.createElement('div');
+   const buttonsUl = document.createElement('ul');
+   const buttonsLi = document.createElement('li');
+   pageDiv.appendChild(buttonsDiv);
+   buttonsDiv.appendChild(buttonsUl);
+   buttonsUl.appendChild(buttonsLi);
+   buttonsDiv.className = 'pagination';
+   buttonsUl.className = 'pagination';
+   buttonsLi.className = 'pagination';
+   for (let p = 1; p <= pageNumbers; p++){
+      const pageButton = document.createElement('a');
+      pageButton.setAttribute('href', "#");
+      pageButton.append(p);
+      pageButton.className = 'pagination';     
+      buttonsLi.appendChild(pageButton);
+   }     
 }
 
 const clickThePages = () => {
@@ -90,5 +89,3 @@ const appendPageLinks = () => {
 }
 
 appendPageLinks();
-// Remember to delete the comments that came with this file, 
-//and replace them with your own code comments.
