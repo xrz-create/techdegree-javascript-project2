@@ -25,14 +25,20 @@ const showPage = (list,page) => {
 /* The appendPageLinks() function broken down into refactored functions 
 for pagination and manipulating the page */
 
+const makeElements = (name, create) => {
+   "const " + name + " = document.createElement('" + create + "');";
+}
+
+const appendChildren = (name, child) => name + ".appendChild(" + child + ");"
+
 const theSearchFunction = () => {
    const headerDiv = document.getElementsByClassName('page-header cf')[0];
-   const searchDiv = document.createElement('div');
-   const searchInput = document.createElement('input');
-   const searchButton = document.createElement('button');
-   headerDiv.appendChild(searchDiv);
-   searchDiv.appendChild(searchInput);
-   searchDiv.appendChild(searchButton);
+   makeElements(searchDiv,div);
+   makeElements(document,input);
+   makeElements(searchButton,button);
+   appendChildren(headerDiv,searchDiv);
+   appendChildren(searchDiv,searchInput);
+   appendChildren(searchDiv,searchButton);
    searchDiv.className = 'student-search';
    searchInput.placeholder = 'Search for students...';
    searchButton.textContent = 'Search';
@@ -40,16 +46,16 @@ const theSearchFunction = () => {
 
 const thePageNumbers = () => {
    pageNumbers = Math.trunc(parseInt(studentList.length) / 10);
-   if (parseInt(studentList.length) > pageNumbers * 10){
-      pageNumbers++;
-   }
+      if (parseInt(studentList.length) > pageNumbers * 10){
+         pageNumbers++;
+      }
    const pageDiv = document.getElementsByClassName('page')[0];
-   const buttonsDiv = document.createElement('div');
-   const buttonsUl = document.createElement('ul');
-   const buttonsLi = document.createElement('li');
-   pageDiv.appendChild(buttonsDiv);
-   buttonsDiv.appendChild(buttonsUl);
-   buttonsUl.appendChild(buttonsLi);
+   makeElements(buttonsDiv,div);
+   makeElements(buttonsUl,ul);
+   makeElements(buttonsLi,li);
+   appendChildren(pageDiv,buttonsDiv);
+   appendChildren(buttonsDiv,buttonsUl);
+   appendChildren(buttonsUl,buttonsLi);
    buttonsDiv.className = 'pagination';
    buttonsUl.className = 'pagination';
    buttonsLi.className = 'pagination';
@@ -74,9 +80,7 @@ const clickThePages = () => {
          }
          button.className = 'active';
          index = e.target.textContent;
-         list = ((parseInt(index)) * 10) - 10;
-         page = ((parseInt(index)) * 10) - 1;
-         showPage(list,page);
+         showPage(((parseInt(index)) * 10) - 10,((parseInt(index)) * 10) - 1);
       }) 
    }
 }
